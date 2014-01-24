@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remote", "Remote\Remote.csproj", "{2B7BBB3C-98C3-4A53-91ED-221BBB90BCA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B7BBB3C-98C3-4A53-91ED-221BBB90BCA3}.Debug|x86.ActiveCfg = Debug|x86
+		{2B7BBB3C-98C3-4A53-91ED-221BBB90BCA3}.Debug|x86.Build.0 = Debug|x86
+		{2B7BBB3C-98C3-4A53-91ED-221BBB90BCA3}.Release|x86.ActiveCfg = Release|x86
+		{2B7BBB3C-98C3-4A53-91ED-221BBB90BCA3}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
