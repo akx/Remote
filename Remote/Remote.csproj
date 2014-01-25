@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\SettingsManager.cs" />
     <Compile Include="Providers\FileZilla\FileZillaSession.cs" />
     <Compile Include="Providers\FileZilla\FileZillaSessionProvider.cs" />
     <Compile Include="Providers\PuTTY\PuTTYSessionProvider.cs" />
@@ -67,9 +68,17 @@
     <Compile Include="UI\SessionTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\UIUtil.cs" />
     <Compile Include="Util\Extensions.cs" />
+    <Compile Include="Util\Hash.cs" />
     <Compile Include="Util\Locator.cs" />
+    <Compile Include="Util\MiniSerialize.cs" />
     <Compile Include="Util\Problem.cs" />
     <Compile Include="Util\RegistryUtil.cs" />
     <Compile Include="Data\SessionAction.cs" />
@@ -85,6 +94,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

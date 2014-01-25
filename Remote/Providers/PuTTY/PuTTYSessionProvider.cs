@@ -1,15 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using Microsoft.Win32;
 using Remote.Data;
+using Remote.UI;
 using Remote.Util;
 
 namespace Remote.Providers.PuTTY
 {
     public class PuTTYSessionProvider : SessionProvider
     {
-        private static string _puttyExecutable;
+        #region classes
+        private class PuTTYSessionProviderSettings
+        {
+            private bool _colorizeSessionBackgroundByHost = false;
+
+            [Description("Before starting a PuTTY session, change the default background color to one based on the session's host name.")]
+            public bool ColorizeSessionBackgroundByHost
+            {
+                get { return _colorizeSessionBackgroundByHost; }
+                set { _colorizeSessionBackgroundByHost = value; }
+            }
+        }
 
         private class LaunchPuTTYAction : SessionAction
         {
@@ -23,6 +37,13 @@ namespace Remote.Providers.PuTTY
                 PuTTYSessionProvider.LaunchPuTTY(session);
             }
         }
+        #endregion
+
+
+        private static PuTTYSessionProviderSettings _settings = new PuTTYSessionProviderSettings();
+        private static string _puttyExecutable;
+        
+
 
         public static Process LaunchPuTTY(Session session)
         {
@@ -32,6 +53,12 @@ namespace Remote.Providers.PuTTY
             }
             if (session is PuTTYSession)
             {
+                if (_settings.ColorizeSessionBackgroundByHost)
+                {
+                    var hue = Hash.Djb2(session.HostName) % 360;
+                    var color = UIUtil.ColorFromHSV(hue, 0.8, 0.1);
+                    SetSessionAttribute(session.Name, "Colour2", string.Format("{0},{1},{2}", color.R, color.G, color.B));
+                }
                 return Process.Start(new ProcessStartInfo
                 {
                     FileName = _puttyExecutable,
@@ -67,9 +94,25 @@ namespace Remote.Providers.PuTTY
             }
         }
 
+        private static void SetSessionAttribute(string sessionName, string attribute, object value)
+        {
+            var key = Registry.CurrentUser.OpenSubKey(@"Software\SimonTatham\PuTTY\Sessions\" + sessionName, true);
+            if (key == null) throw new NullReferenceException("Session " + sessionName + " not found in registry or unable to write");
+            using (key)
+            {
+                key.SetValue(attribute, value);
+                key.Close();
+            }
+        }
+
         public PuTTYSessionProvider()
         {
             _puttyExecutable = Locator.LocateExecutable("PuTTY");
+        }
+
+        public override object GetSettingsObject()
+        {
+            return _settings;
         }
     }
 }

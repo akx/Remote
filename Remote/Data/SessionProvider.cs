@@ -13,5 +13,10 @@ namespace Remote.Data
         {
             return null;
         }
+
+        public virtual object GetSettingsObject()
+        {
+            return null;
+        }
     }
 }
