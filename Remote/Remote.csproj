@@ -75,6 +75,7 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\UIUtil.cs" />
+    <Compile Include="Util\DumpHandler.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\Hash.cs" />
     <Compile Include="Util\Locator.cs" />

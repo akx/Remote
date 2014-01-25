@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Remote.Data;
 using Remote.Providers.FileZilla;
@@ -6,6 +7,7 @@ using Remote.Providers.PuTTY;
 using Remote.Providers.RDP;
 using Remote.Providers.WinSCP;
 using Remote.UI;
+using Remote.Util;
 
 namespace Remote
 {
@@ -17,6 +19,11 @@ namespace Remote
         [STAThread]
         private static void Main()
         {
+            if (!Debugger.IsAttached)
+            {
+                AppDomain.CurrentDomain.UnhandledException += DumpHandler.UnhandledException;
+                Application.ThreadException += DumpHandler.UnhandledException;
+            }
             Initialize();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
