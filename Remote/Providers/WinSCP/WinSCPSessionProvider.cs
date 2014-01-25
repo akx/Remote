@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Win32;
+using Remote.Data;
 using Remote.Util;
 
-namespace Remote.Data
+namespace Remote.Providers.WinSCP
 {
 	class LaunchWinSCPAction : SessionAction
 	{
@@ -21,15 +21,9 @@ namespace Remote.Data
 		private static string _winScpExecutable;
 		
 		internal static Process LaunchWinSCP(Session session) {
-			if (_winScpExecutable == null) throw new ArgumentException("WinSCP executable not found");
-			var ub = new UriBuilder {
-				Scheme = "sftp",
-				Host = session.HostName,
-				Port = session.Port
-			};
-			if(!String.IsNullOrEmpty(session.UserName)) {
-				ub.UserName = session.UserName;
-			}
+			if (_winScpExecutable == null) throw new Problem("WinSCP executable not found");
+		    var ub = session.UriBuilder;
+		    ub.Scheme = "sftp";
 			return Process.Start(new ProcessStartInfo {
 				FileName = _winScpExecutable,
 				Arguments = ub.Uri.ToString()

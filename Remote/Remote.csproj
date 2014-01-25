@@ -44,13 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\PuTTYSessionProvider.cs" />
+    <Compile Include="Providers\FileZilla\FileZillaSession.cs" />
+    <Compile Include="Providers\FileZilla\FileZillaSessionProvider.cs" />
+    <Compile Include="Providers\PuTTY\PuTTYSessionProvider.cs" />
     <Compile Include="Data\Session.cs" />
-    <Compile Include="Data\PuTTYSession.cs" />
+    <Compile Include="Providers\PuTTY\PuTTYSession.cs" />
     <Compile Include="Data\SessionManager.cs" />
     <Compile Include="Data\SessionProvider.cs" />
-    <Compile Include="Data\WinSCPSession.cs" />
-    <Compile Include="Data\WinSCPSessionProvider.cs" />
+    <Compile Include="Providers\WinSCP\WinSCPSession.cs" />
+    <Compile Include="Providers\WinSCP\WinSCPSessionProvider.cs" />
+    <Compile Include="UI\IconGenerator.cs" />
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,8 +62,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\SessionTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\UIUtil.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\Locator.cs" />
+    <Compile Include="Util\Problem.cs" />
     <Compile Include="Util\RegistryUtil.cs" />
     <Compile Include="Util\SessionAction.cs" />
     <EmbeddedResource Include="UI\MainForm.resx">

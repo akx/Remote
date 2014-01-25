@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Win32;
+using Remote.Data;
 using Remote.Util;
 
-namespace Remote.Data
+namespace Remote.Providers.PuTTY
 {
 
 	class LaunchPuTTYAction : SessionAction
@@ -24,6 +25,10 @@ namespace Remote.Data
 		private static string _puttyExecutable;
 
 		internal static Process LaunchPuTTY(Session session) {
+            if (_puttyExecutable == null)
+            {
+                throw new Problem("PuTTY could not be located.");
+            }
 			if(session is PuTTYSession) {
 				return Process.Start(new ProcessStartInfo {
 					FileName = _puttyExecutable,
