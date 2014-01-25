@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace Remote.UI
 {
-    delegate void SessionActionSelectedDelegate(SessionAction action, Session session);
+    internal delegate void SessionActionSelectedDelegate(SessionAction action, Session session);
 
-    class SessionTreeView: TreeView
+    internal class SessionTreeView : TreeView
     {
         private static readonly SessionAction DefaultLaunchAction = new SessionAction("launch");
 
@@ -25,7 +25,7 @@ namespace Remote.UI
         private void SortNodes(TreeNodeCollection collection)
         {
             var nodes = new List<TreeNode>();
-            foreach (var node in collection) nodes.Add((TreeNode)node);
+            foreach (var node in collection) nodes.Add((TreeNode) node);
             nodes.Sort((a, b) => String.Compare(a.Text, b.Text, StringComparison.InvariantCultureIgnoreCase));
             collection.Clear();
             collection.AddRange(nodes.ToArray());
@@ -46,8 +46,12 @@ namespace Remote.UI
             foreach (var session in sessions)
             {
                 if (!session.ShowInList) continue;
-                var contextMenu = new ContextMenuStrip { Tag = session };
-                contextMenu.Items.Add(new ToolStripMenuItem { Text = String.Format("Launch ({0})", session.ProgramName), Tag = DefaultLaunchAction });
+                var contextMenu = new ContextMenuStrip {Tag = session};
+                contextMenu.Items.Add(new ToolStripMenuItem
+                {
+                    Text = String.Format("Launch ({0})", session.ProgramName),
+                    Tag = DefaultLaunchAction
+                });
                 contextMenu.Items.Add(new ToolStripSeparator());
                 foreach (var provider in sessionManager.Providers)
                 {
@@ -56,13 +60,13 @@ namespace Remote.UI
                     {
                         foreach (var item in items)
                         {
-                            contextMenu.Items.Add(new ToolStripMenuItem { Text = item.Text, Tag = item });
+                            contextMenu.Items.Add(new ToolStripMenuItem {Text = item.Text, Tag = item});
                         }
                     }
                 }
                 contextMenu.ItemClicked += SessionContextMenuItemClicked;
                 var imageKey = session.ProgramName;
-                if(!ImageList.Images.ContainsKey(imageKey))
+                if (!ImageList.Images.ContainsKey(imageKey))
                 {
                     double hue = (imageKey.GetHashCode()%645)/645.0;
                     Color color = UIUtil.FromHsl(hue, 0.3, 0.8);
@@ -71,7 +75,7 @@ namespace Remote.UI
                     ImageList.Images.Add(imageKey, IconGenerator.GenerateIcon(color, iconText));
                     ImageList.Images.Add(imageKey + "_Select", IconGenerator.GenerateIcon(color2, iconText));
                 }
-                
+
                 var leaf = new TreeNode
                 {
                     Text = session.DisplayName,
@@ -94,7 +98,7 @@ namespace Remote.UI
                     }
                     else
                     {
-                        var node = new TreeNode { Text = component, Name = component };
+                        var node = new TreeNode {Text = component, Name = component};
                         root.Add(node);
                         root = node.Nodes;
                     }
@@ -114,7 +118,7 @@ namespace Remote.UI
             {
                 var session = menu.Tag as Session;
                 var action = item.Tag as SessionAction;
-                if(SessionActionSelected != null) SessionActionSelected(action, session);
+                if (SessionActionSelected != null) SessionActionSelected(action, session);
             }
         }
 

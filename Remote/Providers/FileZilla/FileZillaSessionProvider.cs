@@ -8,10 +8,7 @@ using Remote.Util;
 
 namespace Remote.Providers.FileZilla
 {
-
-
-
-    class FileZillaSessionProvider: SessionProvider
+    internal class FileZillaSessionProvider : SessionProvider
     {
         private static string _filezillaExecutable;
 
@@ -30,7 +27,8 @@ namespace Remote.Providers.FileZilla
 
         public override IEnumerable<Session> GetSessions()
         {
-            var fileZillaDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FileZilla");
+            var fileZillaDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "FileZilla");
             var siteManagerXmlPath = Path.Combine(fileZillaDataPath, "sitemanager.xml");
             XDocument siteManagerXml;
             using (var sr = new StreamReader(siteManagerXmlPath))
@@ -83,14 +81,14 @@ namespace Remote.Providers.FileZilla
             {
                 FileName = _filezillaExecutable,
                 Arguments = ub.Uri.ToString()
-            });	
+            });
         }
 
         public override IEnumerable<SessionAction> GetSessionActions(Session session)
         {
-            if (_filezillaExecutable!= null)
+            if (_filezillaExecutable != null)
             {
-                return new[] { new LaunchFileZillaAction() };
+                return new[] {new LaunchFileZillaAction()};
             }
             return null;
         }

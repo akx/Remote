@@ -24,6 +24,5 @@ namespace Remote.UI
             }
             return bmp;
         }
-
     }
 }

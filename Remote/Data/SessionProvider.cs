@@ -1,15 +1,17 @@
 using System.Collections.Generic;
 
-namespace Remote.Data {
-    public abstract class SessionProvider {
+namespace Remote.Data
+{
+    public abstract class SessionProvider
+    {
         public virtual IEnumerable<Session> GetSessions()
         {
-			return null;
-		}
+            return null;
+        }
 
         public virtual IEnumerable<SessionAction> GetSessionActions(Session session)
         {
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 }

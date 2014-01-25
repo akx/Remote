@@ -7,20 +7,21 @@ using Remote.Util;
 
 namespace Remote.UI
 {
-	public partial class MainForm : Form {
-		
-		public MainForm() {
-			InitializeComponent();
-			var sm = SessionManager.Instance;
-			sm.AddProvider(new PuTTYSessionProvider());
-			sm.AddProvider(new WinSCPSessionProvider());
+    public partial class MainForm : Form
+    {
+        public MainForm()
+        {
+            InitializeComponent();
+            var sm = SessionManager.Instance;
+            sm.AddProvider(new PuTTYSessionProvider());
+            sm.AddProvider(new WinSCPSessionProvider());
             sm.AddProvider(new FileZillaSessionProvider());
-			sm.Populate();
+            sm.Populate();
             sessionTree.SessionActionSelected += GuardedActionDispatch;
             sessionTree.Populate(sm);
-		    menuStrip.Visible = false;
-		    toolStrip.Visible = false;
-		}
+            menuStrip.Visible = false;
+            toolStrip.Visible = false;
+        }
 
         private void GuardedActionDispatch(SessionAction action, Session session)
         {
@@ -36,7 +37,5 @@ namespace Remote.UI
                 MessageBox.Show(this, prob.Message, "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-	
-
-	}
+    }
 }

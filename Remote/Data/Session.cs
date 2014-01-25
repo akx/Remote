@@ -118,7 +118,7 @@ namespace Remote.Data
             throw new NotImplementedException(String.Format("{0}.Launch() not implemented.", GetType()));
         }
 
-        public static T FromDataBag<T>(Dictionary<string, object> dataBag) where T: Session, new()
+        public static T FromDataBag<T>(Dictionary<string, object> dataBag) where T : Session, new()
         {
             var session = new T();
             session.DataBag.Update(dataBag);

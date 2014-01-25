@@ -2,9 +2,7 @@
 
 namespace Remote.Util
 {
-	static class Extensions
-	{
-		
-
-	}
+    internal static class Extensions
+    {
+    }
 }
