@@ -30,11 +30,17 @@ namespace Remote.Providers.FileZilla
             var fileZillaDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "FileZilla");
             var siteManagerXmlPath = Path.Combine(fileZillaDataPath, "sitemanager.xml");
+            if (!File.Exists(siteManagerXmlPath)) yield break;
             XDocument siteManagerXml;
             using (var sr = new StreamReader(siteManagerXmlPath))
             {
                 siteManagerXml = XDocument.Load(sr);
             }
+            foreach (var session in ReadFromServerXML(siteManagerXml)) yield return session;
+        }
+
+        private static IEnumerable<Session> ReadFromServerXML(XDocument siteManagerXml)
+        {
             foreach (XElement serverNode in siteManagerXml.Descendants("Server"))
             {
                 var parentChain = new List<string>();
