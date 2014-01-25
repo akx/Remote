@@ -4,7 +4,19 @@ using System.Text;
 
 namespace Remote.Data
 {
-    internal abstract class Session
+    public class SessionDataBag : Dictionary<String, object>
+    {
+        public void Update(Dictionary<String, object> other)
+        {
+            foreach (var item in other)
+            {
+                this[item.Key] = item.Value;
+            }
+        }
+    }
+
+
+    public abstract class Session
     {
         public virtual string ProgramName
         {
@@ -16,7 +28,7 @@ namespace Remote.Data
             get { return "*"; }
         }
 
-        protected readonly Dictionary<String, object> DataBag = new Dictionary<string, object>();
+        protected readonly SessionDataBag DataBag = new SessionDataBag();
 
         public virtual string HostName
         {
@@ -104,6 +116,13 @@ namespace Remote.Data
         public virtual void Launch()
         {
             throw new NotImplementedException(String.Format("{0}.Launch() not implemented.", GetType()));
+        }
+
+        public static T FromDataBag<T>(Dictionary<string, object> dataBag) where T: Session, new()
+        {
+            var session = new T();
+            session.DataBag.Update(dataBag);
+            return session;
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿using Microsoft.Win32;
-using Remote.Data;
-using Remote.Util;
+﻿using Remote.Data;
 
 namespace Remote.Providers.PuTTY
 {
-    internal class PuTTYSession : Session
+    public class PuTTYSession : Session
     {
         public override string ProgramName
         {
@@ -14,13 +12,6 @@ namespace Remote.Providers.PuTTY
         public override string ProgramAbbrev
         {
             get { return "P"; }
-        }
-
-        public static PuTTYSession LoadFromRegistry(RegistryKey key, string registryKey)
-        {
-            var session = new PuTTYSession();
-            session.DataBag.Update(RegistryUtil.GetDataBag(key, registryKey));
-            return session;
         }
 
         public override void Launch()

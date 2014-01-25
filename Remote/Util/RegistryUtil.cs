@@ -5,9 +5,9 @@ using Microsoft.Win32;
 
 namespace Remote.Util
 {
-	static class RegistryUtil
+    public static class RegistryUtil
 	{
-		internal static IEnumerable<string> EnumerateSubkeys(RegistryKey rootKey, string subkeyPath) {
+	    public static IEnumerable<string> EnumerateSubkeys(RegistryKey rootKey, string subkeyPath) {
 			var subkey = rootKey.OpenSubKey(subkeyPath);
 			if (subkey != null) {
 				using (subkey) {
@@ -18,7 +18,7 @@ namespace Remote.Util
 			}
 		}
 
-		internal static Dictionary<string, object> GetDataBag(RegistryKey rootKey, string subkeyPath) {
+	    public static Dictionary<string, object> GetDataBag(RegistryKey rootKey, string subkeyPath) {
 			var key = rootKey.OpenSubKey(subkeyPath);
 			if (key == null) {
 				return null;

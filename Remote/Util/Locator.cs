@@ -6,7 +6,7 @@ using Microsoft.Win32;
 
 namespace Remote.Util
 {
-	static class Locator
+    public static class Locator
 	{
 		private static bool _initialized;
 		private static List<string> _paths;
@@ -28,7 +28,7 @@ namespace Remote.Util
 			_initialized = true;
 		}
 
-		internal static string LocateExecutable(string name, IEnumerable<string> pathHints=null) {
+        public static string LocateExecutable(string name, IEnumerable<string> pathHints=null) {
 			Initialize();
 			var paths = new List<string>();
 			paths.AddRange(_paths);

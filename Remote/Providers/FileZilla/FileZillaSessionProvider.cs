@@ -9,24 +9,26 @@ using Remote.Util;
 namespace Remote.Providers.FileZilla
 {
 
-    class LaunchFileZillaAction : SessionAction
-    {
-        public LaunchFileZillaAction()
-            : base("Launch FileZilla")
-        {
-        }
 
-        public override void Dispatch(Session session)
-        {
-            FileZillaSessionProvider.LaunchFileZilla(session);
-        }
-    }
 
     class FileZillaSessionProvider: SessionProvider
     {
         private static string _filezillaExecutable;
 
-        internal override IEnumerable<Session> GetSessions()
+        private class LaunchFileZillaAction : SessionAction
+        {
+            public LaunchFileZillaAction()
+                : base("Launch FileZilla")
+            {
+            }
+
+            public override void Dispatch(Session session)
+            {
+                LaunchFileZilla(session);
+            }
+        }
+
+        public override IEnumerable<Session> GetSessions()
         {
             var fileZillaDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FileZilla");
             var siteManagerXmlPath = Path.Combine(fileZillaDataPath, "sitemanager.xml");
@@ -57,11 +59,11 @@ namespace Remote.Providers.FileZilla
                     string path = String.Join("/", parentChain.ToArray());
                     dataBag["Name"] = path + "/" + dataBag["Name"];
                 }
-                yield return FileZillaSession.FromDataBag(dataBag);
+                yield return Session.FromDataBag<FileZillaSession>(dataBag);
             }
         }
 
-        internal static Process LaunchFileZilla(Session session)
+        public static Process LaunchFileZilla(Session session)
         {
             if (_filezillaExecutable == null)
             {
@@ -84,7 +86,7 @@ namespace Remote.Providers.FileZilla
             });	
         }
 
-        internal override IEnumerable<SessionAction> GetSessionActions(Session session)
+        public override IEnumerable<SessionAction> GetSessionActions(Session session)
         {
             if (_filezillaExecutable!= null)
             {

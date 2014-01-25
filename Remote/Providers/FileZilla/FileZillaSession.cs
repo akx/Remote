@@ -4,7 +4,7 @@ using Remote.Util;
 
 namespace Remote.Providers.FileZilla
 {
-    internal class FileZillaSession : Session
+    public class FileZillaSession : Session
     {
         public override string ProgramName
         {
@@ -19,13 +19,6 @@ namespace Remote.Providers.FileZilla
         public override void Launch()
         {
             FileZillaSessionProvider.LaunchFileZilla(this);
-        }
-
-        public static FileZillaSession FromDataBag(Dictionary<string, object> dataBag)
-        {
-            var session = new FileZillaSession();
-            session.DataBag.Update(dataBag);
-            return session;
         }
     }
 }

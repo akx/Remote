@@ -1,9 +1,8 @@
 ﻿using System;
-using Remote.Data;
 
-namespace Remote.Util
+namespace Remote.Data
 {
-	class SessionAction {
+    public class SessionAction {
 		private readonly string _action;
 		private readonly object[] _data;
 		private readonly string _text;

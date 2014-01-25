@@ -2,8 +2,8 @@
 
 namespace Remote.Data
 {
-	class SessionManager {
-		internal static readonly SessionManager Instance = new SessionManager();
+	public class SessionManager {
+		public static readonly SessionManager Instance = new SessionManager();
 		private readonly List<Session> _sessions = new List<Session>();
 		private readonly List<SessionProvider> _providers = new List<SessionProvider>();
 
@@ -16,11 +16,11 @@ namespace Remote.Data
 		}
 
 
-		internal void AddProvider(SessionProvider provider) {
+		public void AddProvider(SessionProvider provider) {
 			_providers.Add(provider);
 		}
 
-		internal void Populate() {
+		public void Populate() {
 			_sessions.Clear();
 			foreach (var provider in _providers) {
 				var sessions = provider.GetSessions();

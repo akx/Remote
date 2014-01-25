@@ -70,7 +70,7 @@
     <Compile Include="Util\Locator.cs" />
     <Compile Include="Util\Problem.cs" />
     <Compile Include="Util\RegistryUtil.cs" />
-    <Compile Include="Util\SessionAction.cs" />
+    <Compile Include="Data\SessionAction.cs" />
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

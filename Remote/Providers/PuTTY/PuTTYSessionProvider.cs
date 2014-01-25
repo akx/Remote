@@ -8,23 +8,26 @@ using Remote.Util;
 namespace Remote.Providers.PuTTY
 {
 
-	class LaunchPuTTYAction : SessionAction
-	{
-		public LaunchPuTTYAction()
-			: base("Launch PuTTY") {
-		}
-
-		public override void Dispatch(Session session) {
-			PuTTYSessionProvider.LaunchPuTTY(session);
-		}
-	}
 
 
-	class PuTTYSessionProvider: SessionProvider
+	public class PuTTYSessionProvider: SessionProvider
 	{
 		private static string _puttyExecutable;
+        
+        private class LaunchPuTTYAction : SessionAction
+        {
+            public LaunchPuTTYAction()
+                : base("Launch PuTTY")
+            {
+            }
 
-		internal static Process LaunchPuTTY(Session session) {
+            public override void Dispatch(Session session)
+            {
+                PuTTYSessionProvider.LaunchPuTTY(session);
+            }
+        }
+
+		public static Process LaunchPuTTY(Session session) {
             if (_puttyExecutable == null)
             {
                 throw new Problem("PuTTY could not be located.");
@@ -38,16 +41,17 @@ namespace Remote.Providers.PuTTY
 			throw new NotImplementedException("Launching non-native sessions with PuTTY is not supported yet");
 		}
 
-		internal override IEnumerable<SessionAction> GetSessionActions(Session session) {
+	    public override IEnumerable<SessionAction> GetSessionActions(Session session) {
 			if (_puttyExecutable != null) {
 				return new[] { new LaunchPuTTYAction() };
 			}
 			return null;
 		}
 
-		internal override IEnumerable<Session> GetSessions() {
+	    public override IEnumerable<Session> GetSessions() {
 			foreach (var keyName in RegistryUtil.EnumerateSubkeys(Registry.CurrentUser, @"Software\SimonTatham\PuTTY\Sessions")) {
-				var session = PuTTYSession.LoadFromRegistry(Registry.CurrentUser, keyName);
+                var dataBag = RegistryUtil.GetDataBag(Registry.CurrentUser, keyName);
+				var session = Session.FromDataBag<PuTTYSession>(dataBag);
 				if (session != null) {
 					if (session.Name == "Default%20Settings") continue;
 					if (session.Name == "Default Settings") continue;
