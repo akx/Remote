@@ -1,10 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using Remote.Data;
-using Remote.Providers.FileZilla;
-using Remote.Providers.PuTTY;
-using Remote.Providers.RDP;
-using Remote.Providers.WinSCP;
 using Remote.Util;
 
 namespace Remote.UI

@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using Remote.Data;
-using Remote.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,8 +68,8 @@ namespace Remote.UI
                 if (!ImageList.Images.ContainsKey(imageKey))
                 {
                     double hue = (imageKey.GetHashCode()%32)/32.0 * 360.0;
-                    Color color = UIUtil.ColorFromHSV(hue, 0.3, 0.8);
-                    Color color2 = UIUtil.ColorFromHSV(hue, 0.5, 0.8);
+                    Color color = UiUtil.ColorFromHsv(hue, 0.3, 0.8);
+                    Color color2 = UiUtil.ColorFromHsv(hue, 0.5, 0.8);
                     string iconText = session.ProgramAbbrev;
                     ImageList.Images.Add(imageKey, IconGenerator.GenerateIcon(color, iconText));
                     ImageList.Images.Add(imageKey + "_Select", IconGenerator.GenerateIcon(color2, iconText));

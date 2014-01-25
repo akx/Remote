@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Remote.Data;
@@ -29,6 +24,14 @@ namespace Remote.UI
                 tabPage.Controls.Add(propertyGrid);
                 tabControl.TabPages.Add(tabPage);
             }
+            var logPage = new TabPage { Text = "Log" };
+            logPage.Controls.Add(new RichTextBox
+            {
+                Dock = DockStyle.Fill,
+                Text = Encoding.UTF8.GetString(Program.DefaultLogStream.ToArray()),
+                ReadOnly = true
+            });
+            tabControl.TabPages.Add(logPage);
         }
 
         private void button1_Click(object sender, EventArgs e)

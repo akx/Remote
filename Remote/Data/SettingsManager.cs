@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using Remote.Logging;
 using Remote.Util;
 
 namespace Remote.Data
@@ -13,7 +12,8 @@ namespace Remote.Data
     internal class SettingsManager
     {
         public static SettingsManager Instance = new SettingsManager();
-        private string _settingsPath;
+        private readonly string _settingsPath;
+        private static Logger _log = Logger.Get("SettingsManager");
 
         public SettingsManager()
         {
@@ -45,6 +45,7 @@ namespace Remote.Data
                 document.WriteTo(xw);
             }
             File.WriteAllBytes(_settingsPath, ms.ToArray());
+            _log.Success("Settings saved to {0}", _settingsPath);
         }
 
         public void LoadSettings()
@@ -55,6 +56,7 @@ namespace Remote.Data
             {
                 document = XDocument.Load(sr).Root;
             }
+            if (document == null) return;
             foreach (var settings in GetSettingsObjects())
             {
                 var settEl = document.Element(settings.GetType().Name);
@@ -63,6 +65,7 @@ namespace Remote.Data
                     MiniSerialize.Unserialize(settEl, settings);
                 }
             }
+            _log.Success("Settings loaded from {0}", _settingsPath);
         }
     }
 }

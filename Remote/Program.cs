@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using Remote.Data;
+using Remote.Logging;
 using Remote.Providers.FileZilla;
 using Remote.Providers.PuTTY;
 using Remote.Providers.RDP;
@@ -13,6 +15,7 @@ namespace Remote
 {
     internal static class Program
     {
+        internal static readonly MemoryStream DefaultLogStream = new MemoryStream();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -32,6 +35,7 @@ namespace Remote
 
         public static void Initialize()
         {
+            Logger.Root.AddHandler(new PrintToStreamHandler(DefaultLogStream));
             var sm = SessionManager.Instance;
             sm.AddProvider(new PuTTYSessionProvider());
             sm.AddProvider(new WinSCPSessionProvider());

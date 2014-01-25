@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Remote.Data;
-using Remote.Util;
 
 namespace Remote.Providers.FileZilla
 {

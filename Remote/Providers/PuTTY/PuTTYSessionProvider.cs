@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Security.Cryptography;
 using Microsoft.Win32;
 using Remote.Data;
 using Remote.UI;
 using Remote.Util;
+// ReSharper disable once UnusedAutoPropertyAccessor.Local
 
 namespace Remote.Providers.PuTTY
 {
@@ -15,14 +15,9 @@ namespace Remote.Providers.PuTTY
         #region classes
         private class PuTTYSessionProviderSettings
         {
-            private bool _colorizeSessionBackgroundByHost = false;
-
+            [DisplayName("Colorize Session Background By Host")]
             [Description("Before starting a PuTTY session, change the default background color to one based on the session's host name.")]
-            public bool ColorizeSessionBackgroundByHost
-            {
-                get { return _colorizeSessionBackgroundByHost; }
-                set { _colorizeSessionBackgroundByHost = value; }
-            }
+            public bool ColorizeSessionBackgroundByHost { get; set; }
         }
 
         private class LaunchPuTTYAction : SessionAction
@@ -34,13 +29,13 @@ namespace Remote.Providers.PuTTY
 
             public override void Dispatch(Session session)
             {
-                PuTTYSessionProvider.LaunchPuTTY(session);
+                LaunchPuTTY(session);
             }
         }
         #endregion
 
 
-        private static PuTTYSessionProviderSettings _settings = new PuTTYSessionProviderSettings();
+        private static readonly PuTTYSessionProviderSettings Settings = new PuTTYSessionProviderSettings();
         private static string _puttyExecutable;
         
 
@@ -53,10 +48,10 @@ namespace Remote.Providers.PuTTY
             }
             if (session is PuTTYSession)
             {
-                if (_settings.ColorizeSessionBackgroundByHost)
+                if (Settings.ColorizeSessionBackgroundByHost)
                 {
                     var hue = Hash.Djb2(session.HostName) % 360;
-                    var color = UIUtil.ColorFromHSV(hue, 0.8, 0.1);
+                    var color = UiUtil.ColorFromHsv(hue, 0.8, 0.1);
                     SetSessionAttribute(session.Name, "Colour2", string.Format("{0},{1},{2}", color.R, color.G, color.B));
                 }
                 return Process.Start(new ProcessStartInfo
@@ -112,7 +107,7 @@ namespace Remote.Providers.PuTTY
 
         public override object GetSettingsObject()
         {
-            return _settings;
+            return Settings;
         }
     }
 }

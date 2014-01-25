@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\SettingsManager.cs" />
+    <Compile Include="Logging\ILogHandler.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\StringInject.cs" />
     <Compile Include="Providers\FileZilla\FileZillaSession.cs" />
     <Compile Include="Providers\FileZilla\FileZillaSessionProvider.cs" />
     <Compile Include="Providers\PuTTY\PuTTYSessionProvider.cs" />
@@ -76,7 +79,6 @@
     </Compile>
     <Compile Include="UI\UIUtil.cs" />
     <Compile Include="Util\DumpHandler.cs" />
-    <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\Hash.cs" />
     <Compile Include="Util\Locator.cs" />
     <Compile Include="Util\MiniSerialize.cs" />
