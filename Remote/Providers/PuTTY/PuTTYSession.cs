@@ -1,4 +1,5 @@
-﻿using Remote.Data;
+﻿using System.Diagnostics;
+using Remote.Data;
 
 namespace Remote.Providers.PuTTY
 {
@@ -14,9 +15,9 @@ namespace Remote.Providers.PuTTY
             get { return "P"; }
         }
 
-        public override void Launch()
+        public override Process Launch()
         {
-            PuTTYSessionProvider.LaunchPuTTY(this);
+            return PuTTYSessionProvider.LaunchPuTTY(this);
         }
     }
 }

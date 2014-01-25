@@ -2,6 +2,7 @@
 using Remote.Data;
 using Remote.Providers.FileZilla;
 using Remote.Providers.PuTTY;
+using Remote.Providers.RDP;
 using Remote.Providers.WinSCP;
 using Remote.Util;
 
@@ -16,6 +17,7 @@ namespace Remote.UI
             sm.AddProvider(new PuTTYSessionProvider());
             sm.AddProvider(new WinSCPSessionProvider());
             sm.AddProvider(new FileZillaSessionProvider());
+            sm.AddProvider(new RDPSessionProvider());
             sm.Populate();
             sessionTree.SessionActionSelected += GuardedActionDispatch;
             sessionTree.Populate(sm);

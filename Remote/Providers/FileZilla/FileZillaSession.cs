@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Remote.Data;
 using Remote.Util;
 
@@ -16,9 +17,9 @@ namespace Remote.Providers.FileZilla
             get { return "FZ"; }
         }
 
-        public override void Launch()
+        public override Process Launch()
         {
-            FileZillaSessionProvider.LaunchFileZilla(this);
+            return FileZillaSessionProvider.LaunchFileZilla(this);
         }
     }
 }

@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
-
+// ReSharper disable InconsistentNaming
 namespace Remote.Util
 {
     public static class Locator
     {
         private static bool _initialized;
-        private static List<string> _paths;
-        private static List<string> _exts;
+        private static readonly List<string> _paths = new List<string>();
+        private static readonly List<string> _exts = new List<string> { ".EXE", ".COM" };
         private static string _programFiles;
         private static string _programFilesX86;
+        private static Dictionary<string, string> _cache = new Dictionary<string, string>(); 
 
         private static void Initialize()
         {
             if (_initialized) return;
-            _paths = new List<string>();
             var envPath = Environment.GetEnvironmentVariable("PATH");
             if (envPath != null) _paths.AddRange(envPath.Split(Path.PathSeparator));
-            _exts = new List<string> {".EXE", ".COM"};
             var envPathExt = Environment.GetEnvironmentVariable("PATHEXT");
             if (envPathExt != null) _exts.AddRange(envPathExt.Split(Path.PathSeparator));
             var defaultProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
@@ -31,6 +30,15 @@ namespace Remote.Util
 
         public static string LocateExecutable(string name, IEnumerable<string> pathHints = null)
         {
+            if (_cache.ContainsKey(name))
+            {
+                return _cache[name];
+            }
+            var exe = _cache[name] = _LocateExecutable(name, pathHints);
+            return exe;
+        }
+
+        private static string _LocateExecutable(string name, IEnumerable<string> pathHints) {
             Initialize();
             var paths = new List<string>();
             paths.AddRange(_paths);

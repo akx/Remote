@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Remote.Data
@@ -73,7 +74,7 @@ namespace Remote.Data
             {
                 if (DataBag.ContainsKey("UserName")) return DataBag["UserName"] as string;
                 if (DataBag.ContainsKey("User")) return DataBag["User"] as string;
-                throw new KeyNotFoundException("UserName missing");
+                return null;
             }
         }
 
@@ -113,7 +114,7 @@ namespace Remote.Data
         }
 
 
-        public virtual void Launch()
+        public virtual Process Launch()
         {
             throw new NotImplementedException(String.Format("{0}.Launch() not implemented.", GetType()));
         }

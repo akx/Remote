@@ -51,6 +51,8 @@
     <Compile Include="Providers\PuTTY\PuTTYSession.cs" />
     <Compile Include="Data\SessionManager.cs" />
     <Compile Include="Data\SessionProvider.cs" />
+    <Compile Include="Providers\RDP\RDPSession.cs" />
+    <Compile Include="Providers\RDP\RDPSessionProvider.cs" />
     <Compile Include="Providers\WinSCP\WinSCPSession.cs" />
     <Compile Include="Providers\WinSCP\WinSCPSessionProvider.cs" />
     <Compile Include="UI\IconGenerator.cs" />

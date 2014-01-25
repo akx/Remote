@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Remote.Data;
 
 namespace Remote.Providers.WinSCP
@@ -14,9 +15,9 @@ namespace Remote.Providers.WinSCP
             get { return "S"; }
         }
 
-        public override void Launch()
+        public override Process Launch()
         {
-            WinSCPSessionProvider.LaunchWinSCP(this);
+            return WinSCPSessionProvider.LaunchWinSCP(this);
         }
     }
 }
