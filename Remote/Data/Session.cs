@@ -125,5 +125,10 @@ namespace Remote.Data
             session.DataBag.Update(dataBag);
             return session;
         }
+
+        public virtual SettingsObject GetSettingsObject()
+        {
+            return null;
+        }
     }
 }

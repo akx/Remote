@@ -14,6 +14,8 @@ namespace Remote.Util
             var dest = new XElement(type.Name);
             foreach (var prop in type.GetProperties(Flags))
             {
+                if (!prop.CanRead) continue;
+                if (!prop.CanWrite) continue;
                 var value = prop.GetValue(source, Flags, null, null, null);
                 var valEl = new XElement(prop.Name);
                 valEl.SetAttributeValue("type", prop.PropertyType.Name);
@@ -28,6 +30,7 @@ namespace Remote.Util
             var type = dest.GetType();
             foreach (var prop in type.GetProperties(Flags))
             {
+                if (!prop.CanWrite) continue;
                 var valEl = source.Element(prop.Name);
                 if (valEl != null)
                 {

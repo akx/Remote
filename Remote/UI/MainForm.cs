@@ -13,9 +13,14 @@ namespace Remote.UI
             Font = new Font("Segoe UI", 8);
             SessionManager.Instance.Populate();
             sessionTree.SessionActionSelected += GuardedActionDispatch;
-            sessionTree.Populate(SessionManager.Instance);
+            RefreshData();
             menuStrip.Visible = false;
             toolStrip.Visible = false;
+        }
+
+        private void RefreshData()
+        {
+            sessionTree.Populate(SessionManager.Instance);
         }
 
         private void GuardedActionDispatch(SessionAction action, Session session)
@@ -36,6 +41,7 @@ namespace Remote.UI
         private void settingsToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             (new SettingsForm()).ShowDialog(this);
+            RefreshData();
         }
     }
 }

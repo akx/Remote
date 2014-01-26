@@ -40,7 +40,7 @@ namespace Remote.Providers.VNC
             }
             dataBag["HostName"] = host;
             dataBag["Port"] = port;
-            dataBag["Name"] = name;
+            dataBag["Name"] = string.Format("{0} ({1})", host, port);
 
             var session = new T();
             session.DataBag.Update(dataBag);

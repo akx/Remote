@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Text.RegularExpressions;
 using Remote.Data;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,33 @@ namespace Remote.UI
 
     internal class SessionTreeView : TreeView
     {
+        internal class SessionTreeViewSettings: SettingsObject
+        {
+            private const string DefaultHierarchySplitRegexp = "[:/]";
+            private string _hierarchySplitRegexp = DefaultHierarchySplitRegexp;
+
+            [DisplayName("Hierarchy Splitting Regexp")]
+            [Description("The regular expression to use for splitting session names into a hierarchy. Disable hierarchy with an empty regexp.")]
+            [DefaultValue(DefaultHierarchySplitRegexp)]
+            public string HierarchySplitRegexp
+            {
+                get { return _hierarchySplitRegexp; }
+                set { _hierarchySplitRegexp = value; }
+            }
+
+            public override bool ValidateChange(string name, object oldValue, object newValue)
+            {
+                if (name == "HierarchySplitRegexp")
+                {
+                    var v = new Regex(newValue.ToString());
+                    return true;
+                }
+                return true;
+            }
+        }
+
+        private static readonly SessionTreeViewSettings _settings = new SessionTreeViewSettings();
+
         private static readonly SessionAction DefaultLaunchAction = new SessionAction("launch");
 
         public event SessionActionSelectedDelegate SessionActionSelected;
@@ -41,6 +70,9 @@ namespace Remote.UI
             ImageList.Images.Add(IconGenerator.GenerateIcon(BackColor, "+"));
             ImageIndex = 0;
             SelectedImageIndex = 0;
+
+            Regex splitter = !string.IsNullOrEmpty(_settings.HierarchySplitRegexp) ? new Regex(_settings.HierarchySplitRegexp) : null;
+                
 
             foreach (var session in sessions)
             {
@@ -85,21 +117,26 @@ namespace Remote.UI
                     ImageKey = imageKey,
                     SelectedImageKey = imageKey + "_Select",
                 };
-                var path = session.Name.Split(':', '/');
+
                 var root = Nodes;
-                for (var i = 0; i < path.Length - 1; i++)
+                if (splitter != null)
                 {
-                    var component = path[i];
-                    var test = root.Find(component, false);
-                    if (test.Length > 0)
+                    var path = splitter.Split(session.Name);
+
+                    for (var i = 0; i < path.Length - 1; i++)
                     {
-                        root = test[0].Nodes;
-                    }
-                    else
-                    {
-                        var node = new TreeNode {Text = component, Name = component};
-                        root.Add(node);
-                        root = node.Nodes;
+                        var component = path[i];
+                        var test = root.Find(component, false);
+                        if (test.Length > 0)
+                        {
+                            root = test[0].Nodes;
+                        }
+                        else
+                        {
+                            var node = new TreeNode {Text = component, Name = component};
+                            root.Add(node);
+                            root = node.Nodes;
+                        }
                     }
                 }
                 root.Add(leaf);
@@ -128,6 +165,11 @@ namespace Remote.UI
             if (node == null) return;
             var session = node.Tag as Session;
             if (SessionActionSelected != null) SessionActionSelected(DefaultLaunchAction, session);
+        }
+
+        public static SettingsObject GetSettingsObject()
+        {
+            return _settings;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Remote.Data
             return null;
         }
 
-        public virtual object GetSettingsObject()
+        public virtual SettingsObject GetSettingsObject()
         {
             return null;
         }

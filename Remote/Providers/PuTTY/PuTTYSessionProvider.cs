@@ -14,7 +14,7 @@ namespace Remote.Providers.PuTTY
     public class PuTTYSessionProvider : SessionProvider
     {
         #region classes
-        private class PuTTYSessionProviderSettings
+        private class PuTTYSessionProviderSettings: SettingsObject
         {
             [DisplayName("Colorize Session Background By Host")]
             [Description("Before starting a PuTTY session, change the default background color to one based on the session's host name.")]
@@ -115,7 +115,7 @@ namespace Remote.Providers.PuTTY
             _puttyExecutable = Locator.LocateExecutable("PuTTY");
         }
 
-        public override object GetSettingsObject()
+        public override SettingsObject GetSettingsObject()
         {
             return Settings;
         }

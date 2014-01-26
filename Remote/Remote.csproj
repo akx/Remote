@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\SettingsManager.cs" />
+    <Compile Include="Data\SettingsObject.cs" />
     <Compile Include="Logging\ILogHandler.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\StringInject.cs" />

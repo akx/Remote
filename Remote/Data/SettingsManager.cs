@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using Remote.Logging;
+using Remote.UI;
 using Remote.Util;
 
 namespace Remote.Data
@@ -20,7 +21,7 @@ namespace Remote.Data
             _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RemoteSettings.xml");
         }
 
-        public IEnumerable<object> GetSettingsObjects()
+        public IEnumerable<SettingsObject> GetSettingsObjects()
         {
             foreach (var provider in SessionManager.Instance.Providers)
             {
@@ -28,6 +29,7 @@ namespace Remote.Data
                 if (settings == null) continue;
                 yield return settings;
             }
+            yield return SessionTreeView.GetSettingsObject();
         }
 
         public void SaveSettings()
