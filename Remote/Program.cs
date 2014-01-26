@@ -7,6 +7,7 @@ using Remote.Logging;
 using Remote.Providers.FileZilla;
 using Remote.Providers.PuTTY;
 using Remote.Providers.RDP;
+using Remote.Providers.VNC;
 using Remote.Providers.WinSCP;
 using Remote.UI;
 using Remote.Util;
@@ -41,6 +42,7 @@ namespace Remote
             sm.AddProvider(new WinSCPSessionProvider());
             sm.AddProvider(new FileZillaSessionProvider());
             sm.AddProvider(new RDPSessionProvider());
+            sm.AddProvider(new VNCSessionProvider());
             SettingsManager.Instance.LoadSettings();
         }
     }

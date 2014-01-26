@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
 using Remote.Logging;
@@ -25,7 +26,7 @@ namespace Remote.Util
             var envPathExt = Environment.GetEnvironmentVariable("PATHEXT");
             if (envPathExt != null) _exts.AddRange(envPathExt.Split(Path.PathSeparator));
             var defaultProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-            _programFiles = Environment.GetEnvironmentVariable("ProgramFiles") ?? defaultProgramFiles;
+            _programFiles = Environment.GetEnvironmentVariable("ProgramW6432") ?? Environment.GetEnvironmentVariable("ProgramFiles") ?? defaultProgramFiles;
             _programFilesX86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)") ?? defaultProgramFiles;
             _initialized = true;
         }
