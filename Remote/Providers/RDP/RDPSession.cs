@@ -4,7 +4,7 @@ using Remote.Util;
 
 namespace Remote.Providers.RDP
 {
-    public class RDPSession: Session
+    public class RDPSession : Session
     {
         public override string ProgramName
         {
@@ -28,7 +28,7 @@ namespace Remote.Providers.RDP
         public override Process Launch()
         {
             var mstsc = Locator.LocateExecutable("mstsc");
-            if(mstsc == null) throw new Problem("Remote Desktop client (mstsc) not found.");
+            if (mstsc == null) throw new Problem("Remote Desktop client (mstsc) not found.");
             return Process.Start(new ProcessStartInfo
             {
                 FileName = mstsc,

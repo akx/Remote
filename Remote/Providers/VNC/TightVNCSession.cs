@@ -1,6 +1,6 @@
 ﻿namespace Remote.Providers.VNC
 {
-    class TightVNCSession: VNCSession
+    internal class TightVNCSession : VNCSession
     {
         public override string ProgramName
         {

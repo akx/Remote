@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using Remote.Data;
 using Remote.UI;
 using Remote.Util;
+
 // ReSharper disable once UnusedAutoPropertyAccessor.Local
 
 namespace Remote.Providers.PuTTY
@@ -14,7 +15,8 @@ namespace Remote.Providers.PuTTY
     public class PuTTYSessionProvider : SessionProvider
     {
         #region classes
-        private class PuTTYSessionProviderSettings: SettingsObject
+
+        private class PuTTYSessionProviderSettings : SettingsObject
         {
             [DisplayName("Colorize Session Background By Host")]
             [Description("Before starting a PuTTY session, change the default background color to one based on the session's host name.")]
@@ -33,12 +35,11 @@ namespace Remote.Providers.PuTTY
                 LaunchPuTTY(session);
             }
         }
-        #endregion
 
+        #endregion
 
         private static readonly PuTTYSessionProviderSettings Settings = new PuTTYSessionProviderSettings();
         private static string _puttyExecutable;
-        
 
 
         public static Process LaunchPuTTY(Session session)
@@ -63,7 +64,7 @@ namespace Remote.Providers.PuTTY
             }
             var args = new StringBuilder();
             args.Append("-ssh ");
-            if(session.Port != 22) args.AppendFormat("-P {0} ", session.Port);
+            if (session.Port != 22) args.AppendFormat("-P {0} ", session.Port);
             if (!String.IsNullOrEmpty(session.UserName)) args.AppendFormat("{0}@", session.UserName);
             args.AppendFormat(session.HostName);
             return Process.Start(new ProcessStartInfo

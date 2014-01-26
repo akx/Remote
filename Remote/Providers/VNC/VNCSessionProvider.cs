@@ -10,7 +10,7 @@ using Remote.Util;
 
 namespace Remote.Providers.VNC
 {
-    class VNCSessionProvider: SessionProvider
+    internal class VNCSessionProvider : SessionProvider
     {
         private static string _tightVncViewerExecutable;
         private static string _vncViewerExecutable;
@@ -37,7 +37,7 @@ namespace Remote.Providers.VNC
 
         public static Process LaunchVNC(VNCSession vncSession)
         {
-            if(String.IsNullOrEmpty(_vncViewerExecutable)) throw new Problem("No VNC viewer could be found.");
+            if (String.IsNullOrEmpty(_vncViewerExecutable)) throw new Problem("No VNC viewer could be found.");
 
             return Process.Start(new ProcessStartInfo
             {

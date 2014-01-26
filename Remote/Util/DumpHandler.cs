@@ -34,7 +34,6 @@ namespace Remote.Util
             }
             catch
             {
-                
             }
             Process.Start(path);
         }

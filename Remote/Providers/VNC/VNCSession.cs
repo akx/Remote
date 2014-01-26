@@ -5,7 +5,7 @@ using Remote.Data;
 
 namespace Remote.Providers.VNC
 {
-    abstract class VNCSession: Session
+    internal abstract class VNCSession : Session
     {
         public override string ProgramName
         {
@@ -23,7 +23,7 @@ namespace Remote.Providers.VNC
             int port;
             if (name.Contains("::"))
             {
-                var bits = name.Split(new []{"::"}, 2, StringSplitOptions.None);
+                var bits = name.Split(new[] {"::"}, 2, StringSplitOptions.None);
                 host = bits[0];
                 port = Convert.ToInt32(bits[1]);
             }
@@ -44,7 +44,7 @@ namespace Remote.Providers.VNC
 
             var session = new T();
             session.DataBag.Update(dataBag);
-            
+
 
             return session;
         }

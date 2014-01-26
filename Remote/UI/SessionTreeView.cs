@@ -13,7 +13,7 @@ namespace Remote.UI
 
     internal class SessionTreeView : TreeView
     {
-        internal class SessionTreeViewSettings: SettingsObject
+        internal class SessionTreeViewSettings : SettingsObject
         {
             private const string DefaultHierarchySplitRegexp = "[:/]";
             private string _hierarchySplitRegexp = DefaultHierarchySplitRegexp;
@@ -72,7 +72,7 @@ namespace Remote.UI
             SelectedImageIndex = 0;
 
             Regex splitter = !string.IsNullOrEmpty(_settings.HierarchySplitRegexp) ? new Regex(_settings.HierarchySplitRegexp) : null;
-                
+
 
             foreach (var session in sessions)
             {
@@ -99,7 +99,7 @@ namespace Remote.UI
                 var imageKey = session.ProgramName;
                 if (!ImageList.Images.ContainsKey(imageKey))
                 {
-                    double hue = (imageKey.GetHashCode()%32)/32.0 * 360.0;
+                    double hue = (imageKey.GetHashCode()%32)/32.0*360.0;
                     Color color = UiUtil.ColorFromHsv(hue, 0.3, 0.8);
                     Color color2 = UiUtil.ColorFromHsv(hue, 0.5, 0.8);
                     string iconText = session.ProgramAbbrev;

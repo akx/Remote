@@ -17,6 +17,7 @@ namespace Remote
     internal static class Program
     {
         internal static readonly MemoryStream DefaultLogStream = new MemoryStream();
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

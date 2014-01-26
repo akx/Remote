@@ -42,7 +42,7 @@ namespace Remote.Data
                 root.Add(MiniSerialize.Serialize(settings));
             }
             var ms = new MemoryStream();
-            using (var xw = XmlWriter.Create(ms, new XmlWriterSettings{Encoding = Encoding.UTF8, Indent = true, IndentChars = "\t"}))
+            using (var xw = XmlWriter.Create(ms, new XmlWriterSettings {Encoding = Encoding.UTF8, Indent = true, IndentChars = "\t"}))
             {
                 document.WriteTo(xw);
             }
