@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Text;
 using Microsoft.Win32;
 using Remote.Data;
 using Remote.UI;
@@ -50,17 +51,26 @@ namespace Remote.Providers.PuTTY
             {
                 if (Settings.ColorizeSessionBackgroundByHost)
                 {
-                    var hue = Hash.Djb2(session.HostName) % 360;
+                    var hue = Hash.Djb2(session.HostName)%360;
                     var color = UiUtil.ColorFromHsv(hue, 0.8, 0.1);
                     SetSessionAttribute(session.Name, "Colour2", string.Format("{0},{1},{2}", color.R, color.G, color.B));
                 }
                 return Process.Start(new ProcessStartInfo
                 {
                     FileName = _puttyExecutable,
-                    Arguments = String.Format("-load \"{0}\"", session.Name)
+                    Arguments = String.Format("-load \"{0}\"", session.Name.Replace("%20", " "))
                 });
             }
-            throw new NotImplementedException("Launching non-native sessions with PuTTY is not supported yet");
+            var args = new StringBuilder();
+            args.Append("-ssh ");
+            if(session.Port != 22) args.AppendFormat("-P {0} ", session.Port);
+            if (!String.IsNullOrEmpty(session.UserName)) args.AppendFormat("{0}@", session.UserName);
+            args.AppendFormat(session.HostName);
+            return Process.Start(new ProcessStartInfo
+            {
+                FileName = _puttyExecutable,
+                Arguments = args.ToString()
+            });
         }
 
         public override IEnumerable<SessionAction> GetSessionActions(Session session)
