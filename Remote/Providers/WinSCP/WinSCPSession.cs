@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Drawing;
 using Remote.Data;
 
 namespace Remote.Providers.WinSCP
@@ -15,7 +16,11 @@ namespace Remote.Providers.WinSCP
             get { return "S"; }
         }
 
-        public override Process Launch()
+    	public override Color ProgramColor {
+    		get { return Color.Beige; }
+    	}
+
+    	public override Process Launch()
         {
             return WinSCPSessionProvider.LaunchWinSCP(this);
         }

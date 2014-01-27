@@ -42,5 +42,20 @@ namespace Remote.UI
                     return Color.FromArgb(255, v, p, q);
             }
         }
+
+		private static int Clamp(int value, int min, int max) {
+			if (value < min) return min;
+			if (value > max) return max;
+			return value;
+		}
+
+		internal static Color Modulate(Color color, float multiplier) {
+			return Color.FromArgb(
+				color.A,
+				Clamp((int) (color.R*multiplier), 0, 255),
+				Clamp((int) (color.G*multiplier), 0, 255),
+				Clamp((int) (color.B * multiplier), 0, 255)
+			);
+		}
     }
 }

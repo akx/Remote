@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using Remote.Data;
 
 namespace Remote.Providers.PuTTY
@@ -15,7 +16,11 @@ namespace Remote.Providers.PuTTY
             get { return "P"; }
         }
 
-        public override Process Launch()
+    	public override Color ProgramColor {
+    		get { return Color.DarkSlateGray; }
+    	}
+
+    	public override Process Launch()
         {
             return PuTTYSessionProvider.LaunchPuTTY(this);
         }

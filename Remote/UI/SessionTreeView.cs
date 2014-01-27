@@ -107,9 +107,8 @@ namespace Remote.UI
                 var imageKey = session.ProgramName;
                 if (!ImageList.Images.ContainsKey(imageKey))
                 {
-                    double hue = (imageKey.GetHashCode()%32)/32.0*360.0;
-                    Color color = UiUtil.ColorFromHsv(hue, 0.3, 0.8);
-                    Color color2 = UiUtil.ColorFromHsv(hue, 0.5, 0.8);
+                    Color color = session.ProgramColor;
+                    Color color2 = UiUtil.Modulate(color, 1.2f);
                     string iconText = session.ProgramAbbrev;
                     ImageList.Images.Add(imageKey, IconGenerator.GenerateIcon(color, iconText));
                     ImageList.Images.Add(imageKey + "_Select", IconGenerator.GenerateIcon(color2, iconText));

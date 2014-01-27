@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Text;
 
 namespace Remote.Data
@@ -28,6 +29,10 @@ namespace Remote.Data
         {
             get { return "*"; }
         }
+
+    	public virtual Color ProgramColor {
+			get { return Color.LightGray; }
+    	}
 
         protected readonly SessionDataBag DataBag = new SessionDataBag();
 

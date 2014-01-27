@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using Remote.Data;
 using Remote.Util;
 
@@ -16,7 +17,11 @@ namespace Remote.Providers.RDP
             get { return "RD"; }
         }
 
-        public static RDPSession FromHostAndPort(string hostname, int port)
+    	public override Color ProgramColor {
+    		get { return Color.DodgerBlue; }
+    	}
+
+    	public static RDPSession FromHostAndPort(string hostname, int port)
         {
             var session = new RDPSession();
             session.DataBag["Host"] = hostname;

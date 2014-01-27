@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using Remote.Data;
 
 namespace Remote.Providers.FileZilla
@@ -15,7 +16,11 @@ namespace Remote.Providers.FileZilla
             get { return "FZ"; }
         }
 
-        public override Process Launch()
+    	public override Color ProgramColor {
+    		get { return Color.DarkRed; }
+    	}
+
+    	public override Process Launch()
         {
             return FileZillaSessionProvider.LaunchFileZilla(this);
         }

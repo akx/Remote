@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using Remote.Data;
 
 namespace Remote.Providers.VNC
@@ -17,7 +18,11 @@ namespace Remote.Providers.VNC
             get { return "V"; }
         }
 
-        public static T FromNameAndDataBag<T>(string name, Dictionary<string, object> dataBag) where T : VNCSession, new()
+    	public override Color ProgramColor {
+    		get { return Color.Chocolate; }
+    	}
+
+    	public static T FromNameAndDataBag<T>(string name, Dictionary<string, object> dataBag) where T : VNCSession, new()
         {
             string host;
             int port;
