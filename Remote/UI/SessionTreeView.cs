@@ -17,8 +17,16 @@ namespace Remote.UI
         {
             private const string DefaultHierarchySplitRegexp = "[:/]";
             private string _hierarchySplitRegexp = DefaultHierarchySplitRegexp;
+        	private bool _basenameOnly = false;
 
-            [DisplayName("Hierarchy Splitting Regexp")]
+			[DisplayName("Show Basename Only")]
+			[Description("Only show the base name of a hierarchical session in the tree view.")]
+        	public bool BasenameOnly {
+        		get { return _basenameOnly; }
+        		set { _basenameOnly = value; }
+        	}
+
+        	[DisplayName("Hierarchy Splitting Regexp")]
             [Description("The regular expression to use for splitting session names into a hierarchy. Disable hierarchy with an empty regexp.")]
             [DefaultValue(DefaultHierarchySplitRegexp)]
             public string HierarchySplitRegexp
@@ -138,6 +146,14 @@ namespace Remote.UI
                             root = node.Nodes;
                         }
                     }
+					if(_settings.BasenameOnly) {
+						try {
+							var bits = splitter.Split(leaf.Text);
+							leaf.Text = bits[bits.Length - 1];
+						} catch {
+							// Can't do much about this.
+						}
+					}
                 }
                 root.Add(leaf);
             }

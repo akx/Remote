@@ -6,7 +6,7 @@ namespace Remote.UI
 {
     internal static class IconGenerator
     {
-        internal static Image GenerateIcon(Color background, string text, int size = 16)
+        internal static Bitmap GenerateIcon(Color background, string text, int size = 16)
         {
             var foreground = background.GetBrightness() < 0.6 ? Color.White : Color.Black;
             var bmp = new Bitmap(size, size, PixelFormat.Format32bppPArgb);

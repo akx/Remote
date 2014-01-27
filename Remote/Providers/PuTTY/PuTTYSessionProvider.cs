@@ -21,6 +21,19 @@ namespace Remote.Providers.PuTTY
             [DisplayName("Colorize Session Background By Host")]
             [Description("Before starting a PuTTY session, change the default background color to one based on the session's host name.")]
             public bool ColorizeSessionBackgroundByHost { get; set; }
+
+        	private float _colorizeSessionBrightness = 0.1f;
+
+        	[DisplayName("Colorization Brightness")]
+			[DefaultValue(0.1f)]
+			public float ColorizeSessionBrightness {
+        		get { return _colorizeSessionBrightness; }
+        		set { _colorizeSessionBrightness = value; }
+        	}
+
+        	[DisplayName("Additional Command Line Parameters (foreign sessions)")]
+			public string ForeignSessionCommandLineParameters { get; set; }
+
         }
 
         private class LaunchPuTTYAction : SessionAction
@@ -50,10 +63,10 @@ namespace Remote.Providers.PuTTY
             }
             if (session is PuTTYSession)
             {
-                if (Settings.ColorizeSessionBackgroundByHost)
-                {
-                    var hue = Hash.Djb2(session.HostName)%360;
-                    var color = UiUtil.ColorFromHsv(hue, 0.8, 0.1);
+                if (Settings.ColorizeSessionBackgroundByHost) {
+                	const int N_HUES = 30;
+                    var hue = (Hash.Djb2(session.HostName) % N_HUES) * (360.0 / N_HUES);
+                    var color = UiUtil.ColorFromHsv(hue, 0.8, Settings.ColorizeSessionBrightness);
                     SetSessionAttribute(session.Name, "Colour2", string.Format("{0},{1},{2}", color.R, color.G, color.B));
                 }
                 return Process.Start(new ProcessStartInfo
@@ -65,6 +78,7 @@ namespace Remote.Providers.PuTTY
             var args = new StringBuilder();
             args.Append("-ssh ");
             if (session.Port != 22) args.AppendFormat("-P {0} ", session.Port);
+			if (!string.IsNullOrEmpty(Settings.ForeignSessionCommandLineParameters)) args.Append(Settings.ForeignSessionCommandLineParameters + " ");
             if (!String.IsNullOrEmpty(session.UserName)) args.AppendFormat("{0}@", session.UserName);
             args.AppendFormat(session.HostName);
             return Process.Start(new ProcessStartInfo

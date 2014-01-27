@@ -11,11 +11,14 @@ namespace Remote.UI
         {
             InitializeComponent();
             Font = new Font("Segoe UI", 8);
+			Icon = Icon.FromHandle(IconGenerator.GenerateIcon(Color.Firebrick, "R").GetHicon());
+        	ShowIcon = true;
             SessionManager.Instance.Populate();
             sessionTree.SessionActionSelected += GuardedActionDispatch;
             RefreshData();
             menuStrip.Visible = false;
             toolStrip.Visible = false;
+        	statusStrip.Visible = false;
         }
 
         private void RefreshData()
